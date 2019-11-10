@@ -1,19 +1,33 @@
 <template>
-	<div class="list">
-		<div class="addressBook" v-for="(item,key) of addressBooks" :key="key">
-			<div class="title">{{key}}</div>
-			<div class="item" v-for="innerItem of item" :key="innerItem.id">
-				<img :src="innerItem.photo">
-				<div class="content">{{innerItem.nickname}}</div>
+	<div class="list" ref="wrapper">
+		<div>
+			<div class="addressBook" v-for="(item,key) of addressBooks" :key="key" :ref="key">
+				<div class="title">{{key}}</div>
+				<div class="item" v-for="innerItem of item" :key="innerItem.id">
+					<img :src="innerItem.photo">
+					<div class="content">{{innerItem.nickname}}</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+import Bscroll from 'better-scroll'
 export default {
   name: 'list',
-  props:['addressBooks']
+  props:['addressBooks','letter'],
+  mounted(){
+  	this.scroll=new Bscroll(this.$refs.wrapper);
+  },
+  watch:{
+  	letter(){
+  		if (this.letter) {
+  			const element = this.$refs[this.letter][0];
+  			this.scroll.scrollToElement(element);
+  		}
+  	}
+  }
 }
 </script>
 
@@ -43,7 +57,4 @@ export default {
 				font-size:.4rem
 				padding-bottom:.3rem
 				border-bottom:1px solid #ccc
-				
-			
-			
 </style>

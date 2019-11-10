@@ -72,49 +72,49 @@ export default {
  -->
 <style lang="stylus" scoped>
 	.login-logo
-		width:3rem;
-		height:3rem;
-		background:#10a78e;
-		margin:1rem auto .5rem;
-		color:#fff;
-		line-height:3rem;
-		font-size:.8rem;
-		border-radius:50%;
-		overflow:hidden;
-		text-align:center;
+		width:3rem
+		height:3rem
+		background:#10a78e
+		margin:1rem auto .5rem
+		color:#fff
+		line-height:3rem
+		font-size:.8rem
+		border-radius:50%
+		overflow:hidden
+		text-align:center
 	
 	.login-content
-		margin:1rem .8rem;
-		line-height:.4rem;
+		margin:1rem .8rem
+		line-height:.4rem
 		li
-			border-bottom:1px solid #ccc;
-			height:1rem;
-			padding:.3rem 0 0;
-			position:relative;
-			overflow:hidden;
+			border-bottom:1px solid #ccc
+			height:1rem
+			padding:.3rem 0 0
+			position:relative
+			overflow:hidden
 			input
-				border:none;
-				line-height:.8rem;
-				width:100%;
-				outline:0;
+				border:none
+				line-height:.8rem
+				width:100%
+				outline:0
 	.submit-button
-		background:#10a78e;
-		color:#fff;
-		border-radius:1rem;
-		height:1rem;
-		line-height:1rem;
-		font-size:.6rem;
-		margin-top:1rem;
-		padding:0;
-		text-align:center;
-		display:block;
+		background:#10a78e
+		color:#fff
+		border-radius:1rem
+		height:1rem
+		line-height:1rem
+		font-size:.6rem
+		margin-top:1rem
+		padding:0
+		text-align:center
+		display:block
 	.error-info
-		color:red;
-		padding-top:.3rem;
+		color:red
+		padding-top:.3rem
 	.copyright
-		position:absolute;
-		padding-top:0;
-		padding-left:1rem;
-		fontsize:.3rem;
+		position:absolute
+		padding-top:0
+		padding-left:1rem
+		fontsize:.3rem
 			
 </style>

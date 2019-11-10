@@ -2,7 +2,8 @@
 	<div>
 		<address-book-header></address-book-header>
 		<address-book-search></address-book-search>
-		<address-book-list :addressBooks="addressBooks"></address-book-list>
+		<address-book-list :addressBooks="addressBooks" :letter="letter"></address-book-list>
+		<address-book-letter :addressBooks="addressBooks" @changeLetter="clickLetter"></address-book-letter>
 	</div>
 </template>
 
@@ -12,16 +13,19 @@
 	import AddressBookHeader from '@/pages/components/header'
 	import AddressBookSearch from '@/pages/components/search'
 	import AddressBookList from '@/pages/components/list'
+	import AddressBookLetter from '@/pages/components/letter'
 	export default {
 		name:"addressBook",
 		components:{
 			AddressBookHeader,
 			AddressBookSearch,
-			AddressBookList
+			AddressBookList,
+			AddressBookLetter
 		},
 		data(){
 			return {
-				addressBooks:{}
+				addressBooks:{},
+				letter:''
 			}
 		},
 		methods:{
@@ -49,6 +53,9 @@
 					}).catch(error=>{
 						console.log(error);
 					})
+			},
+			clickLetter(letter){
+				this.letter=letter;
 			}
 		},
 		mounted(){
