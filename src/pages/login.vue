@@ -1,16 +1,16 @@
 <template>
 	<div>
-		<div class="login-logo">通訊錄</div>
+		<div class="login-logo">通讯录</div>
 		<form action="" class="login-content">
 			<ul>
 				<li>
-					<input v-model="username" type="text" placeholder="請輸入用戶名"/>
+					<input v-model="username" type="text" placeholder="请输入用户名"/>
 				</li>
 				<li>
-					<input v-model="password" type="password" placeholder="請輸入密碼"/>
+					<input v-model="password" type="password" placeholder="请输入密码"/>
 				</li>
 			</ul>
-			<a href="javascript:" class="submit-button" @click="submit">登錄</a>
+			<a href="javascript:" class="submit-button" @click="submit">登录</a>
 			<p class="error-info">{{errorInfo}}</p>
 		</form>
 		<p class="copyright">
@@ -35,11 +35,11 @@ export default {
   	submit(){
   		let url = getServerUrl("/user/login");
   		if(this.username.trim()=='') {
-  			this.errorInfo="用戶名不能為空";
+  			this.errorInfo="用户名不能为空";
   			return;
   		}
   		if(this.password.trim()=='') {
-  			this.errorInfo="密碼不能為空";
+  			this.errorInfo="密码不能为空";
   			return;
   		}
   		axios.post(url, {"username":this.username,"password":this.password})
@@ -65,9 +65,9 @@ export default {
 	
 	npm install axios
 	
-	stylus是CSS預處理，顧名思義，預先處理CSS
-	stylus給CSS添加了可編程的特性，也就是說，在stylus中可以使用變量、函數、判斷、循環等一系列CSS沒有的東西來編寫CSS
-	執行一些列操作後，這個文件可以編譯成CSS
+	stylus是CSS预处理，顾名思义，预先处理CSS
+	stylus給CSS添加了可编程的特性，也就是说，在stylus中可以使用变量、函数、判断、循环等一系列CSS沒有的东西来编写CSS
+	执行一些列操作后，这个文件可以编译成CSS
 
  -->
 <style lang="stylus" scoped>
