@@ -46,8 +46,8 @@ export default {
   			.then(response=>{
   				console.log(response);
   				if(response.data.code==200) {
-  					console.log(response.data.msg);
   					window.localStorage.setItem("token", response.data.msg);
+  					this.$router.replace('/addressBook');
   				} else {
   					this.errorInfo=response.data.msg;
   				}
