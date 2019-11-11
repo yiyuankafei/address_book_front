@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<address-book-header></address-book-header>
-		<address-book-search></address-book-search>
+		<address-book-search :addressBooks="addressBooks"></address-book-search>
 		<address-book-list :addressBooks="addressBooks" :letter="letter"></address-book-list>
 		<address-book-letter :addressBooks="addressBooks" @changeLetter="clickLetter"></address-book-letter>
 	</div>
