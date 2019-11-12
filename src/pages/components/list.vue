@@ -3,10 +3,10 @@
 		<div>
 			<div class="addressBook" v-for="(item,key) of addressBooks" :key="key" :ref="key">
 				<div class="title">{{key}}</div>
-				<div class="item" v-for="innerItem of item" :key="innerItem.id">
+				<router-link tag="div" :to="`/detail/${innerItem.id}`" class="item" v-for="innerItem of item" :key="innerItem.id">
 					<img :src="innerItem.photo">
 					<div class="content">{{innerItem.nickname}}</div>
-				</div>
+				</router-link>
 			</div>
 		</div>
 	</div>
@@ -18,7 +18,7 @@ export default {
   name: 'list',
   props:['addressBooks','letter'],
   mounted(){
-  	this.scroll=new Bscroll(this.$refs.wrapper);
+  	this.scroll=new Bscroll(this.$refs.wrapper,{click:true});
   },
   watch:{
   	letter(){

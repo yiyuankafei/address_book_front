@@ -42,6 +42,9 @@
 			<div class="item">
 				<a @click="save">保存</a>
 			</div> 
+			<div class="item">
+				<a @click="del">删除</a>
+			</div> 
 		</div>
 		<gallery v-show="ifShowGallery" @hideGallery="hideGallery" :galleryImage="galleryImage"></gallery>
 	</div>
@@ -55,9 +58,12 @@ import {getServerUrl} from '@/config/sys.js'
 import gallery from '@/pages/common/gallery'
 
 export default {
-  name: 'add',
+  name: 'detail',
   components:{
   	gallery
+  },
+  mounted(){
+  	this.getInfo();
   },
   data(){
   	return {
@@ -66,12 +72,21 @@ export default {
   		galleryImage:''
   	}
   },
-  mounted(){
-  	this.addressBook={
-  		photo:'http://www.open1111.com:80/image/default.jpg'
-  	}
-  },
   methods:{
+  	getInfo(){
+  		let targetId = this.$route.params.id;
+  		let url = getServerUrl("/contact/" + targetId);
+		let token = window.localStorage.getItem('token');
+		axios.defaults.headers.common['token']=token;
+		axios.get(url)
+			.then(response=>{
+				if (response.data.code==200) {
+					this.addressBook = response.data.content;
+				}
+			}).catch(error=>{
+				console.log(error);
+			})
+  	}, 
   	imageClick(){
   		this.$refs.file.click();
   	},
@@ -117,17 +132,18 @@ export default {
 			return;
 		}
 		
-		axios.post(url, {"nickname":this.addressBook.nickname,
+		axios.put(url, {"nickname":this.addressBook.nickname,
 						 "mobile":this.addressBook.mobile,
 						 "phone":this.addressBook.phone,
 						 "companyAddress":this.addressBook.companyAddress,
 						 "homeAddress":this.addressBook.homeAddress,
 						 "mark":this.addressBook.mark,
-						 "photo":this.addressBook.photo
+						 "photo":this.addressBook.photo,
+						 "id":this.addressBook.id
 						})
 			 .then(response=>{
 			 	if (response.data.code==200) {
-					alert('添加成功');
+					alert('修改成功');
 					pubsub.publish('refreshAddressBook','');
 					this.$router.replace('/addressBook');
 				}
@@ -135,6 +151,24 @@ export default {
 			 	console.log(error);
 			 });
 		
+    },
+    del(){
+    	if(confirm('确认删除这条记录吗？')) {
+    		let targetId = this.addressBook.id;
+    		let url = getServerUrl("/contact/" + targetId);
+			let token = window.localStorage.getItem('token');
+			axios.defaults.headers.common['token']=token;
+			axios.delete(url)
+			 .then(response=>{
+			 	if (response.data.code==200) {
+					alert('删除成功');
+					pubsub.publish('refreshAddressBook','');
+					this.$router.replace('/addressBook');
+				}
+			 }).catch(error=>{
+			 	console.log(error);
+			 });
+    	}
     }
   }
 }
@@ -201,12 +235,13 @@ export default {
 					width:100%
 		.action
 			padding-top:.5rem
-			padding-bottom:2rem
+			padding-bottom:.2rem
 			.item
 				width:100%
 				text-align:center
 				padding-top:.3rem
 				padding-bottom:.3rem
+				border-bottom:1px solid #eee
 				a
 					font-size:.4rem
 					color:#576b97

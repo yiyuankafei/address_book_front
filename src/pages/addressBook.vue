@@ -37,7 +37,7 @@
 				axios.get(url)
 					.then(response=>{
 						console.log(response);
-						this.addressBooks=response.data;
+						this.addressBooks=response.data.content;
 						console.log(response);
 					}).catch(error=>{
 						console.log(error);
