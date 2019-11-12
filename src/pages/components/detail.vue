@@ -132,7 +132,7 @@ export default {
 			return;
 		}
 		
-		axios.put(url, {"nickname":this.addressBook.nickname,
+		axios.post(url, {"nickname":this.addressBook.nickname,
 						 "mobile":this.addressBook.mobile,
 						 "phone":this.addressBook.phone,
 						 "companyAddress":this.addressBook.companyAddress,
