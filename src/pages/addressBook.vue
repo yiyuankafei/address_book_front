@@ -35,6 +35,7 @@
 				axios.defaults.headers.common['token']=token;
 				axios.get(url)
 					.then(response=>{
+						console.log(response);
 						this.addressBooks=response.data;
 						console.log(response);
 					}).catch(error=>{
