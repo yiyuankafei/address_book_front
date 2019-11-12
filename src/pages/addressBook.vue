@@ -9,6 +9,7 @@
 
 <script>
 	import axios from 'axios'
+	import pubsub from 'pubsub-js'
 	import {getServerUrl} from '@/config/sys.js'
 	import AddressBookHeader from '@/pages/components/header'
 	import AddressBookSearch from '@/pages/components/search'
@@ -62,6 +63,9 @@
 		mounted(){
 			setInterval(this.refreshToken, 1000 * 60 * 3);
 			this.getAddressBooks();
+			pubsub.subscribe('refreshAddressBook',(msg,data)=>{
+				this.getAddressBooks();
+			});
 		}
 	}
 </script>

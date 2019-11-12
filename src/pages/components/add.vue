@@ -15,32 +15,32 @@
 		<div class="userInfo">
 			<div class="item">
 				<span>姓名</span>
-				<input type="text"></input>
+				<input type="text" v-model="addressBook.nickname"></input>
 			</div>
 			<div class="item">
 				<span>手机号码</span>
-				<input type="text"></input>
+				<input type="text" v-model="addressBook.mobile"></input>
 			</div>
 			<div class="item">
 				<span>座机电话号码</span>
-				<input type="text"></input>
+				<input type="text" v-model="addressBook.phone"></input>
 			</div>
 			<div class="item">
 				<span>工作单位地址</span>
-				<textarea></textarea>
+				<textarea v-model="addressBook.companyAddress"></textarea>
 			</div>
 			<div class="item">
 				<span>家庭地址</span>
-				<textarea></textarea>
+				<textarea v-model="addressBook.homeAddress"></textarea>
 			</div>
 			<div class="item">
 				<span>备注</span>
-				<textarea></textarea>
+				<textarea v-model="addressBook.mark"></textarea>
 			</div>
 		</div>
 		<div class="action">
 			<div class="item">
-				<a href="">保存</a>
+				<a @click="save">保存</a>
 			</div> 
 		</div>
 		<gallery v-show="ifShowGallery" @hideGallery="hideGallery" :galleryImage="galleryImage"></gallery>
@@ -50,6 +50,7 @@
 <script>
 gallery
 import axios from 'axios'
+import pubsub from 'pubsub-js'
 import {getServerUrl} from '@/config/sys.js'
 import gallery from '@/pages/common/gallery'
 
@@ -84,7 +85,6 @@ export default {
 		
 		axios.post(url,param,config)
 			.then(response=>{
-				console.log(response);
 				if (response.data.code==200) {
 					this.addressBook.photo = response.data.content;
 				}
@@ -98,6 +98,38 @@ export default {
     },
     hideGallery(){
     	this.ifShowGallery=false
+    },
+    save(){
+    	let url = getServerUrl("/contact");
+		let token = window.localStorage.getItem('token');
+		axios.defaults.headers.common['token']=token;
+		if(this.addressBook.nickname==null||this.addressBook.nickname.trim()=='') {
+			alert('姓名不能为空');
+			return;
+		}
+		if(this.addressBook.mobile==null||this.addressBook.mobile.trim()=='') {
+			alert('手机号不能为空');
+			return;
+		}
+		
+		axios.post(url, {"nickname":this.addressBook.nickname,
+						 "mobile":this.addressBook.mobile,
+						 "phone":this.addressBook.phone,
+						 "companyAddress":this.addressBook.companyAddress,
+						 "homeAddress":this.addressBook.homeAddress,
+						 "mark":this.addressBook.mark,
+						 "photo":this.addressBook.photo
+						})
+			 .then(response=>{
+			 	if (response.data.code==200) {
+					alert('添加成功');
+					pubsub.publish('refreshAddressBook','');
+					this.$router.replace('/addressBook');
+				}
+			 }).catch(error=>{
+			 	console.log(error);
+			 });
+		
     }
   }
 }
